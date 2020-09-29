@@ -1,0 +1,127 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './styles.css';
+import '../Profile/styles'
+import { Map, TileLayer, Marker, Popup, Circle, CircleMarker} from "react-leaflet";
+//import Upload from '../Upload/index'
+import {DivPrincipal, SideBar, Header } from '../Profile/styles'
+import backend from '../../services/backend'
+import Upload from '../Upload/index'
+import '../Profile/styles.css'
+
+
+
+ 
+
+
+function Profile({dataOne}) {
+
+  
+  
+    const [userAtual, setUserAtual] = useState('')
+    const [dms, setDms] = useState([])
+
+
+  useEffect(()=> {
+
+
+    console.log(dms)
+
+
+
+  },[dms])
+
+
+  useEffect(()=> {
+
+
+   const UserStorage = localStorage.getItem('@Users')
+    //console.log('uus', userAtual)
+    //console.log(UserStorage)
+    setUserAtual(JSON.parse(UserStorage))
+    
+    
+
+
+  }, [])
+
+
+  function AddMaps(){
+
+   var arrayDMS = localStorage.getItem('@dms')
+
+    //arrayDMS = JSON.parse(arrayDMS)
+
+      setDms([...dms,arrayDMS])
+
+  }
+
+ 
+  const position = [1.35, 100.8] // L - 100,4880555555556
+  const newPositon = [100.4880555555556, 9.48805555555556] //99.48805555555556, 100.4880555555556
+  const TOKEN = 'pk.eyJ1IjoibHVjYXNyYWZhZWw2MDMiLCJhIjoiY2tmbjlpb2Q0MW5mMTJwbWo5dGpnMjZ0byJ9.TU8-oTDsAPqznX3fDz11Ew'
+
+  return (
+    <>  
+  <DivPrincipal>
+    <SideBar>
+      <Header>
+       <Link to={'/'}> <button> Logout </button> </Link>
+        <br/>
+        <span> Online: {userAtual} </span>
+        </Header>
+      <Upload></Upload>
+      <button onClick={AddMaps}> Adicionar Marcadores </button>
+      
+    </SideBar>
+   
+    <Map id='mapid' center={[45.4, -75.7]} zoom={12}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      />
+
+      <Marker position={[45.4, -75.7]}>
+        <Popup>
+          A pretty CSS3 popup. <br /> Easily customizable.
+        </Popup>
+      </Marker>
+
+      {dms.map((values) => console.log(values[0][0]))}
+      
+
+    </Map>
+
+    {console.log('validaco',dms)}
+
+
+
+
+{/* {valorDMS[0].map((val) => console.log(val))} */}
+    
+ {/* {valorDMS[0].map( (value,index) => {
+
+
+   
+
+return (
+  <>
+  <h1>Name: {value[0], value[0]}</h1>
+  <h1>Name: {value[1], value[1]}</h1>
+  
+  </>
+  ) */}
+
+        
+  </DivPrincipal>
+      
+    
+
+    </>
+  );
+}
+
+export default Profile;
+
+
+/// <Circle center={position} radius={800} /> 
